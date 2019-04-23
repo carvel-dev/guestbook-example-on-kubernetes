@@ -19,3 +19,31 @@ Using [k14s tools](https://github.com/k14s), deploy via:
 ```bash
 ytt t -R -f . | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
 ```
+
+## Highlighted Features
+
+Here are some features of k14s tools as used in this example:
+
+ytt:
+
+- several configuration files use `data.values.redis_port` value from `values.yml`
+  - this feature is useful for organizing shared configuration in one place
+
+kbld:
+
+- easy to convert source code for `frontend` application and `redis-slave` into container images
+  - source: `build.yml`
+- swap one image for another via `ImageOverrides` configuration
+
+kapp:
+
+- all configuration resources are tagged consistently, hence could be tracked
+  - see `kapp inspect -a guestbook`
+- label selectors on Service and Deployment resources are scoped to this application automatically
+  - example: `frontend.yml` only specifies `frontend: ""` label, and kapp augments it with an application specific label
+- `kapp.k14s.io/update-strategy: fallback-on-replace` annotation on Deployment resources allows to easily change any part of Deployment
+  - by default if update is allowed by k8s, no forceful action will be taken
+  - example: `frontend` Deployment
+- `kapp.k14s.io/versioned: ""` annotation on ConfigMap resource allows us to change ConfigMap data and be certain that related Deployment resources will be updated with new values
+  - example: `frontend` Deployment picks up env variables from `frontend-config` ConfigMap
+- all pod logs from this application could be found via `kapp logs -f -a guestbook`

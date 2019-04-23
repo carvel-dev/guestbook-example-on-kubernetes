@@ -1,5 +1,7 @@
 #@ load("@ytt:data", "data")
 
+#@ frontend_port = 80
+
 ---
 apiVersion: v1
 kind: Service
@@ -8,7 +10,7 @@ metadata:
   name: frontend
 spec:
   ports:
-  - port: 80
+  - port: #@ frontend_port
   selector:
     frontend: ""
 ---
@@ -40,7 +42,7 @@ spec:
         - configMapRef:
             name: frontend-config
         ports:
-        - containerPort: 80
+        - containerPort: #@ frontend_port
 ---
 apiVersion: v1
 kind: ConfigMap

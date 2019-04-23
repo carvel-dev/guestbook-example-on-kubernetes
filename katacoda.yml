@@ -1,0 +1,26 @@
+#@ load("@ytt:data", "data")
+#@ load("@ytt:overlay", "overlay")
+
+#@ if data.values.katacoda:
+
+#! Configure all Deployment resources to use master node
+#! since kbld uses local Docker daemon to build images,
+#! we will have to single node (master) for running all Pods
+
+#@overlay/match by=overlay.subset({"kind":"Deployment"}),expects="1+"
+---
+spec:
+  template:
+    spec:
+      #@overlay/match missing_ok=True
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
+
+#! Remove ImageDestinations as we do not want to docker login
+#! in Katacoda environments to avoid security issue
+
+#@overlay/match by=overlay.subset({"kind":"ImageDestinations"})
+#@overlay/remove
+---
+
+#@ end

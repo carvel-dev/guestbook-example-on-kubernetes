@@ -12,6 +12,12 @@ Using [k14s tools](https://github.com/k14s), deploy via:
 ytt t -R -f . | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
 ```
 
+If you want to use online playground, head over to [Katacoda Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground). You will have to set `katacoda` flag in `values.yml` to `true` and untaint master node, before proceeding with the above command. See comments in `katacoda.yml` for additional details.
+
+```bash
+kubectl taint nodes master node-role.kubernetes.io/master-
+```
+
 ## Layout
 
 - `php-redis/`: frontend app (Apache2 + PHP + Redis client)
@@ -20,6 +26,7 @@ ytt t -R -f . | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
 - `frontend.yml`: frontend configuration
 - `redis-master.yml`: configuration to deploy Redis in master mode
 - `redis-slave.yml`: configuration to deploy Redis as a slave
+- `katacoda.yml`: ytt overlays to customize deployment for Katacoda Playground
 - `values.yml`: global configuration knobs
 
 ## Highlighted Features

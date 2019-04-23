@@ -1,0 +1,3 @@
+#@data/values
+---
+redis_port: 6379

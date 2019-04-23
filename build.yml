@@ -1,0 +1,21 @@
+apiVersion: kbld.k14s.io/v1alpha1
+kind: ImageOverrides
+overrides:
+- image: k8s.gcr.io/redis:e2e
+  newImage: redis:3.2.9 #! Use same redis version as one used for redis-slave
+---
+apiVersion: kbld.k14s.io/v1alpha1
+kind: Sources
+sources:
+- image: gcr.io/google-samples/gb-frontend:v4
+  path: php-redis
+- image: gcr.io/google_samples/gb-redisslave:v1
+  path: redis-slave
+---
+apiVersion: kbld.k14s.io/v1alpha1
+kind: ImageDestinations
+destinations:
+- image: gcr.io/google-samples/gb-frontend:v4
+  newImage: docker.io/dkalinin/kbld-gb-frontend
+- image: gcr.io/google_samples/gb-redisslave:v1
+  newImage: docker.io/dkalinin/kbld-gb-redisslave

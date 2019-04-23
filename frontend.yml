@@ -1,0 +1,54 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: frontend
+spec:
+  ports:
+  - port: 80
+  selector:
+    frontend: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: frontend
+  annotations:
+    kapp.k14s.io/update-strategy: fallback-on-replace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      frontend: ""
+  template:
+    metadata:
+      labels:
+        frontend: ""
+    spec:
+      containers:
+      - name: php-redis
+        image: gcr.io/google-samples/gb-frontend:v4
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        envFrom:
+        - configMapRef:
+            name: frontend-config
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: default
+  name: frontend-config
+  annotations:
+    kapp.k14s.io/versioned: ""
+data:
+  GUESTBOOK_REDIS_PORT: #@ str(data.values.redis_port)
+  GUESTBOOK_BG: "#eee"

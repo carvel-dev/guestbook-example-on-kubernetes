@@ -1,0 +1,43 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: redis-slave
+spec:
+  ports:
+  - port: #@ data.values.redis_port
+  selector:
+    redis-slave: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: redis-slave
+  annotations:
+    kapp.k14s.io/update-strategy: fallback-on-replace
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      redis-slave: ""
+  template:
+    metadata:
+      labels:
+        redis-slave: ""
+    spec:
+      containers:
+      - name: slave
+        image: gcr.io/google_samples/gb-redisslave:v1
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GUESTBOOK_REDIS_PORT
+          value: #@ str(data.values.redis_port)
+        ports:
+        - containerPort: #@ data.values.redis_port

@@ -1,0 +1,44 @@
+#@ load("@ytt:data", "data")
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: redis-master
+spec:
+  ports:
+  - port: #@ data.values.redis_port
+    targetPort: #@ data.values.redis_port
+  selector:
+    redis-master: ""
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: default
+  name: redis-master
+  annotations:
+    kapp.k14s.io/update-strategy: fallback-on-replace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      redis-master: ""
+  template:
+    metadata:
+      labels:
+        redis-master: ""
+    spec:
+      containers:
+      - name: master
+        image: k8s.gcr.io/redis:e2e
+        resources:
+          requests:
+            cpu: 120m
+            memory: 100Mi
+        ports:
+        - containerPort: #@ data.values.redis_port
+        env:
+        - name: FOO
+          value: FOO

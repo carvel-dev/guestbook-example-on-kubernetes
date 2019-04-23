@@ -1,5 +1,9 @@
 #@ load("@ytt:data", "data")
 
+#@ def labels():
+redis-master: ""
+#@ end
+
 ---
 apiVersion: v1
 kind: Service
@@ -10,8 +14,7 @@ spec:
   ports:
   - port: #@ data.values.redis_port
     targetPort: #@ data.values.redis_port
-  selector:
-    redis-master: ""
+  selector: #@ labels()
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -23,12 +26,10 @@ metadata:
 spec:
   replicas: 1
   selector:
-    matchLabels:
-      redis-master: ""
+    matchLabels: #@ labels()
   template:
     metadata:
-      labels:
-        redis-master: ""
+      labels: #@ labels()
     spec:
       containers:
       - name: master

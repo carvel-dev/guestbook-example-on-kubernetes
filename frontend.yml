@@ -2,6 +2,10 @@
 
 #@ frontend_port = 80
 
+#@ def labels():
+frontend: ""
+#@ end
+
 ---
 apiVersion: v1
 kind: Service
@@ -11,8 +15,7 @@ metadata:
 spec:
   ports:
   - port: #@ frontend_port
-  selector:
-    frontend: ""
+  selector: #@ labels()
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -24,12 +27,10 @@ metadata:
 spec:
   replicas: 3
   selector:
-    matchLabels:
-      frontend: ""
+    matchLabels: #@ labels()
   template:
     metadata:
-      labels:
-        frontend: ""
+      labels: #@ labels()
     spec:
       containers:
       - name: php-redis

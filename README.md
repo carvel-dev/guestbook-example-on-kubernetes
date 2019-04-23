@@ -1,6 +1,16 @@
 # Modified Guestbook k8s Example
 
-Based on [guestbook example from kubernetes/examples](https://github.com/kubernetes/examples/blob/d94a4484e1f73a277df25b13153f54cc60773eb5/guestbook/all-in-one/guestbook-all-in-one.yaml).
+Guestbook k8s example is meant to showcase how k14s tools work together with a realistic application.
+
+This example is based on [guestbook example from kubernetes/examples](https://github.com/kubernetes/examples/blob/d94a4484e1f73a277df25b13153f54cc60773eb5/guestbook/all-in-one/guestbook-all-in-one.yaml). Changes were done to remove unused functionality.
+
+## Deploy
+
+Using [k14s tools](https://github.com/k14s), deploy via:
+
+```bash
+ytt t -R -f . | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
+```
 
 ## Layout
 
@@ -11,14 +21,6 @@ Based on [guestbook example from kubernetes/examples](https://github.com/kuberne
 - `redis-master.yml`: configuration to deploy Redis in master mode
 - `redis-slave.yml`: configuration to deploy Redis as a slave
 - `values.yml`: global configuration knobs
-
-## Deploy
-
-Using [k14s tools](https://github.com/k14s), deploy via:
-
-```bash
-ytt t -R -f . | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
-```
 
 ## Highlighted Features
 

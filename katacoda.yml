@@ -23,4 +23,20 @@ spec:
 #@overlay/remove
 ---
 
+#! Configure frontend Service to be exposed over a node port,
+#! so that it could be visible through Katacoda port view.
+#! Available under: "+"" button next to "Terminal Host 1" tab, then
+#! click on "Select port to view on Host 1" and enter 30000
+
+#@overlay/match by=overlay.subset({"kind":"Service","metadata":{"name":"frontend"}})
+---
+spec:
+  #@overlay/match missing_ok=True
+  type: NodePort
+  ports:
+  #@overlay/match by="port"
+  - port: #@ 80
+    #@overlay/match missing_ok=True
+    nodePort: 30000
+
 #@ end

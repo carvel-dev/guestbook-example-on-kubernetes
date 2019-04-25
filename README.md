@@ -42,6 +42,8 @@ ytt:
 
 - several configuration files use `data.values.redis_port` value from `config/values.yml`
   - this feature is useful for organizing shared configuration in one place
+- separate overlay configuration that customizes another resource
+  - example: `config/frontend-scale.yml`
 
 kbld:
 

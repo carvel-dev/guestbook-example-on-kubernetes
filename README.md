@@ -9,7 +9,7 @@ This example is based on [guestbook example from kubernetes/examples](https://gi
 Using [k14s tools](https://github.com/k14s), deploy via:
 
 ```bash
-ytt t -R -f . | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
+ytt t -R -f config/ | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
 ```
 
 If you want to use online playground, head over to [Katacoda Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground). You will have to set `katacoda` flag in `values.yml` to `true` and untaint master node, before proceeding with the above command. See comments in `katacoda.yml` for additional details.
@@ -22,12 +22,12 @@ kubectl taint nodes master node-role.kubernetes.io/master-
 
 - `php-redis/`: frontend app (Apache2 + PHP + Redis client)
 - `redis-slave/`: Dockerfile to configure Redis as a slave
-- `build.yml`: configuration for kbld to manage images
-- `frontend.yml`: frontend configuration
-- `redis-master.yml`: configuration to deploy Redis in master mode
-- `redis-slave.yml`: configuration to deploy Redis as a slave
-- `katacoda.yml`: ytt overlays to customize deployment for Katacoda Playground
-- `values.yml`: global configuration knobs
+- `config/build.yml`: configuration for kbld to manage images
+- `config/frontend.yml`: frontend configuration
+- `config/redis-master.yml`: configuration to deploy Redis in master mode
+- `config/redis-slave.yml`: configuration to deploy Redis as a slave
+- `config/katacoda.yml`: ytt overlays to customize deployment for Katacoda Playground
+- `config/values.yml`: global configuration knobs
 
 ## Highlighted Features
 
@@ -35,13 +35,13 @@ Here are some features of k14s tools as used in this example:
 
 ytt:
 
-- several configuration files use `data.values.redis_port` value from `values.yml`
+- several configuration files use `data.values.redis_port` value from `config/values.yml`
   - this feature is useful for organizing shared configuration in one place
 
 kbld:
 
 - easy to convert source code for `frontend` application and `redis-slave` into container images
-  - source: `build.yml`
+  - source: `config/build.yml`
 - swap one image for another via `ImageOverrides` configuration
 
 kapp:
@@ -49,7 +49,7 @@ kapp:
 - all configuration resources are tagged consistently, hence could be tracked
   - see `kapp inspect -a guestbook`
 - label selectors on Service and Deployment resources are scoped to this application automatically
-  - example: `frontend.yml` only specifies `frontend: ""` label, and kapp augments it with an application specific label
+  - example: `config/frontend.yml` only specifies `frontend: ""` label, and kapp augments it with an application specific label
 - `kapp.k14s.io/update-strategy: fallback-on-replace` annotation on Deployment resources allows to easily change any part of Deployment
   - by default if update is allowed by k8s, no forceful action will be taken
   - example: `frontend` Deployment

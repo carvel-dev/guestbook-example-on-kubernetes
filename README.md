@@ -28,6 +28,7 @@ kubectl taint nodes master node-role.kubernetes.io/master-
 - `redis-slave/`: Dockerfile to configure Redis as a slave
 - `config/build.yml`: configuration for kbld to manage images
 - `config/frontend.yml`: frontend configuration
+- `config/frontend-scale.yml`: separate configuration to scale up frontend
 - `config/redis-master.yml`: configuration to deploy Redis in master mode
 - `config/redis-slave.yml`: configuration to deploy Redis as a slave
 - `config/katacoda.yml`: ytt overlays to customize deployment for Katacoda Playground

@@ -4,15 +4,19 @@ Guestbook k8s example is meant to showcase how k14s tools work together with a r
 
 This example is based on [guestbook example from kubernetes/examples](https://github.com/kubernetes/examples/blob/d94a4484e1f73a277df25b13153f54cc60773eb5/guestbook/all-in-one/guestbook-all-in-one.yaml). Changes were done to remove unused functionality.
 
+## Install k14s Tools
+
+Head over to [k14s.io](https://k14s.io/) for installation instructions.
+
 ## Deploy
 
-Using [k14s tools](https://github.com/k14s), deploy via:
+Using k14s tools, deploy via:
 
 ```bash
 ytt t -R -f config/ | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
 ```
 
-If you want to use online playground, head over to [Katacoda Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground). You will have to set `katacoda` flag in `values.yml` to `true` and untaint master node, before proceeding with the above command. See comments in `katacoda.yml` for additional details.
+If you want to use online playground instead of your own cluster, head over to [Katacoda Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground). You will have to set `katacoda` flag in `config/values.yml` to `true` and untaint master node, before proceeding with the above command. See comments in `config/katacoda.yml` for additional details.
 
 ```bash
 kubectl taint nodes master node-role.kubernetes.io/master-

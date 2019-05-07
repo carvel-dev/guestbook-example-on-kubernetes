@@ -5,7 +5,7 @@
 
 #! Configure all Deployment resources to use master node
 #! since kbld uses local Docker daemon to build images,
-#! we will have to single node (master) for running all Pods
+#! we will have to use single node (master) for running all Pods
 
 #@overlay/match by=overlay.subset({"kind":"Deployment"}),expects="1+"
 ---
@@ -17,7 +17,8 @@ spec:
         node-role.kubernetes.io/master: ""
 
 #! Remove ImageDestinations as we do not want to docker login
-#! in Katacoda environments to avoid security issue
+#! in Katacoda environments to avoid using real credentials
+#! in a temporary environment
 
 #@overlay/match by=overlay.subset({"kind":"ImageDestinations"})
 #@overlay/remove

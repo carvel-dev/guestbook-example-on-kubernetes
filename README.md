@@ -16,11 +16,42 @@ Using k14s tools, deploy via:
 ytt t -R -f config/ | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
 ```
 
+### Deploying to online playground
+
 If you want to use online playground instead of your own cluster, head over to [Katacoda Kubernetes Playground](https://www.katacoda.com/courses/kubernetes/playground). You will have to set `katacoda` flag in [`config/values.yml`](config/values.yml) to `true` and untaint master node, before proceeding with the above command. See comments in [`config/katacoda.yml`](config/katacoda.yml) for additional details.
 
 ```bash
 kubectl taint nodes master node-role.kubernetes.io/master-
 ```
+
+### Making changes
+
+Once deployed, feel free to make changes to the app, and re-run same command.
+
+For example, change [`frontend/guestbook.php`](frontend/guestbook.php):
+
+```diff
+-$bg = getenv('GUESTBOOK_BG');
++$bg = 'yellow';
+```
+
+or change [`frontend/frontend.yml`](frontend/frontend.yml):
+
+```diff
+-  GUESTBOOK_BG: "#eee"
++  GUESTBOOK_BG: "yellow"
+```
+
+and then deploy again:
+
+```bash
+ytt t -R -f config/ | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
+```
+
+Note that during second deploy each tool will try to be optimal based on changes made:
+
+- kbld (via Docker) will only rebuild affected layers/images
+- kapp will only deploy resources that changes or were affected by the change
 
 ## Layout
 

@@ -20,9 +20,11 @@ spec:
 #! in Katacoda environments to avoid using real credentials
 #! in a temporary environment
 
+#@ if data.values.push_images:
 #@overlay/match by=overlay.subset({"kind":"ImageDestinations"})
 #@overlay/remove
 ---
+#@ end
 
 #! Configure frontend Service to be exposed over a node port,
 #! so that it could be visible through Katacoda port view.

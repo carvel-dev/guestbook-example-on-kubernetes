@@ -2,3 +2,5 @@
 ---
 redis_port: 6379
 katacoda: false
+push_images: false
+push_images_repo: docker.io/dkalinin

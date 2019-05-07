@@ -1,3 +1,5 @@
+#@ load("@ytt:data", "data")
+
 apiVersion: kbld.k14s.io/v1alpha1
 kind: ImageOverrides
 overrides:
@@ -11,11 +13,13 @@ sources:
   path: frontend
 - image: gcr.io/google_samples/gb-redisslave:v1
   path: redis-slave
+
+#@ if/end data.values.push_images:
 ---
 apiVersion: kbld.k14s.io/v1alpha1
 kind: ImageDestinations
 destinations:
 - image: gcr.io/google-samples/gb-frontend:v4
-  newImage: docker.io/dkalinin/kbld-gb-frontend
+  newImage: #@ data.values.push_images_repo + "/kbld-gb-frontend"
 - image: gcr.io/google_samples/gb-redisslave:v1
-  newImage: docker.io/dkalinin/kbld-gb-redisslave
+  newImage: #@ data.values.push_images_repo + "/kbld-gb-redisslave"

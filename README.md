@@ -24,7 +24,7 @@ kubectl taint nodes master node-role.kubernetes.io/master-
 
 ## Layout
 
-- [`php-redis/`](php-redis/): frontend app (Apache2 + PHP + Redis client)
+- [`frontend/`](frontend/): frontend app (Apache2 + PHP + Redis client)
 - [`redis-slave/`](redis-slave/): Dockerfile to configure Redis as a slave
 - [`config/build.yml`](config/build.yml): configuration for kbld to manage images
 - [`config/frontend.yml`](config/frontend.yml): frontend configuration

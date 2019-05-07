@@ -8,7 +8,7 @@ apiVersion: kbld.k14s.io/v1alpha1
 kind: Sources
 sources:
 - image: gcr.io/google-samples/gb-frontend:v4
-  path: php-redis
+  path: frontend
 - image: gcr.io/google_samples/gb-redisslave:v1
   path: redis-slave
 ---

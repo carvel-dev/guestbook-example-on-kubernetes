@@ -33,7 +33,7 @@ spec:
       labels: #@ labels()
     spec:
       containers:
-      - name: php-redis
+      - name: frontend
         image: gcr.io/google-samples/gb-frontend:v4
         resources:
           requests:

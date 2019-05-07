@@ -24,6 +24,22 @@ If you want to use online playground instead of your own cluster, head over to [
 kubectl taint nodes master node-role.kubernetes.io/master-
 ```
 
+### Viewing frontend app
+
+You can access frontend service at `127.0.0.1:8080` in your browser via `kubectl port-forward` command:
+
+```bash
+kubectl port-forward svc/frontend 8080:80
+```
+
+You will have to restart port forward command after making changes as pods are recreated. Alternatively consider using [k14s' kwt tool](https://github.com/k14s/kwt) which exposes cluser IP subnets and cluster DNS to your machine:
+
+```bash
+sudo -E kwt net start
+```
+
+and open [`http://frontend.default.svc.cluster.local/`](http://frontend.default.svc.cluster.local/).
+
 ### Making changes
 
 Once deployed, feel free to make changes to the app, and re-run same command.

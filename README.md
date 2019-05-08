@@ -129,7 +129,7 @@ kbld:
 kapp:
 
 - all configuration resources are tagged consistently, hence could be tracked
-  - see `kapp inspect -a guestbook`
+  - see `kapp inspect -a guestbook` and `kapp inspect -a guestbook --tree`
 - label selectors on Service and Deployment resources are scoped to this application automatically
   - example: [`config/frontend.yml`](config/frontend.yml) only specifies `frontend: ""` label, and kapp augments it with an application specific label
 - `kapp.k14s.io/update-strategy: fallback-on-replace` annotation on Deployment resources allows to easily change any part of Deployment

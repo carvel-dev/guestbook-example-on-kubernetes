@@ -50,6 +50,8 @@ If you want to use online playground instead of your own cluster, head over to [
 kubectl taint nodes master node-role.kubernetes.io/master-
 ```
 
+(Command does end with a hyphen.)
+
 ### Viewing Frontend App
 
 Once deployed successfully, you can access frontend service at `127.0.0.1:8080` in your browser via `kubectl port-forward` command:

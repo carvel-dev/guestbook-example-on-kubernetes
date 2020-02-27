@@ -18,7 +18,7 @@ cd k8s-guestbook-example/
 Using k14s tools, deploy via:
 
 ```bash
-ytt t -R -f config/ | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
+kapp deploy -a guestbook -f <(ytt -f config/ | kbld -f-) --diff-changes
 ```
 
 Above command does the following:
@@ -37,7 +37,7 @@ If you are using remote cluster as your deployment target you will have to provi
 
 ```bash
 docker login ...
-ytt t -R -f config/ --data-value push_images=true --data-value push_images_repo=docker.io/dkalinin | ...
+kapp deploy -a guestbook -f <(ytt -f config/ --data-value push_images=true --data-value push_images_repo=docker.io/dkalinin | kbld -f-) -c
 ```
 
 (Even if you are deploying to remote cluster, Minikube could be used for its Docker daemon; just make sure that your `~/.kube/config` points to your remote cluster.)
@@ -89,7 +89,7 @@ or change [`frontend/frontend.yml`](frontend/frontend.yml):
 and run exactly same command as before:
 
 ```bash
-ytt t -R -f config/ ...any opts... | kbld -f - | kapp deploy -a guestbook -f - --diff-changes -y
+kapp deploy -a guestbook -f <(ytt -f config/ ...any opts... | kbld -f -) --diff-changes
 ```
 
 Note that during second deploy each tool will try to be as optimal as possible based on changes made:

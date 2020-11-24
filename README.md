@@ -113,20 +113,20 @@ Note that during second deploy each tool will try to be as optimal as possible b
 
 Here are some features of k14s tools as used in this example:
 
-ytt:
+### ytt
 
 - several configuration files use `data.values.redis_port` value from [`config/values.yml`](config/values.yml)
   - this feature is useful for organizing shared configuration in one place
 - separate overlay configuration that customizes another resource
   - example: [`config/frontend-scale.yml`](config/frontend-scale.yml)
 
-kbld:
+### kbld
 
 - easy to convert source code for `frontend` application and `redis-slave` into container images
   - source: [`config/build.yml`](config/build.yml)
 - swap one image for another via `ImageOverrides` configuration
 
-kapp:
+### kapp
 
 - all configuration resources are tagged consistently, hence could be tracked
   - see `kapp inspect -a guestbook` and `kapp inspect -a guestbook --tree`

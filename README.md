@@ -1,3 +1,5 @@
+![logo](logos/CarvelLogo.png)
+
 # Modified Guestbook k8s Example
 
 Guestbook k8s example is meant to showcase how k14s tools work together with a realistic application.
@@ -138,3 +140,11 @@ Here are some features of k14s tools as used in this example:
 - `kapp.k14s.io/versioned: ""` annotation on ConfigMap resource allows us to change ConfigMap data and be certain that related Deployment resources will be updated with new values
   - example: `frontend` Deployment picks up env variables from `frontend-config` ConfigMap
 - all pod logs from this application could be found via `kapp logs -f -a guestbook`
+
+### Join the Community and Make Carvel Better
+Carvel is better because of our contributors and maintainers. It is because of you that we can bring great software to the community.
+Please join us during our online community meetings ([Zoom link](http://community.klt.rip/)) every other Wednesday at 12PM ET / 9AM PT and catch up with past meetings on the [VMware YouTube Channel](https://www.youtube.com/playlist?list=PL7bmigfV0EqQ_cDNKVTIcZt-dAM-hpClS).
+Join [Google Group](https://groups.google.com/g/carvel-dev) to get updates on the project and invites to community meetings.
+You can chat with us on Kubernetes Slack in the #carvel channel and follow us on Twitter at @carvel_dev.
+
+Check out which organizations are using and contributing to Carvel: [Adopter's list](https://github.com/vmware-tanzu/carvel/ADOPTERS.md)

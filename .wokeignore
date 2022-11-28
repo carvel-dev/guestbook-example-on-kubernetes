@@ -1,0 +1,7 @@
+# to update at a later time
+.wokeignore
+redis-slave/
+config/redis-slave.yml
+frontend/guestbook.php
+README.md
+config/build.yml
